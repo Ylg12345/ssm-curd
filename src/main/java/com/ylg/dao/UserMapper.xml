@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylg.dao.UserMapper">
+
+    <!--int createUser();-->
+    <insert id="createUser">
+        insert into t_user values(#{id},#{username},#{password},#{age},#{sex},#{email})
+    </insert>
+
+    <update id="updateUser">
+        update t_user
+        <set>
+            <if test="username != null and username !=''">
+                username = #{username},
+            </if>
+            <if test="password != null and password !=''">
+                password = #{password},
+            </if>
+            <if test="age != null and age !=''">
+                age = #{age},
+            </if>
+            <if test="sex != null and sex !=''">
+                sex = #{sex},
+            </if>
+            <if test="email != null and email !=''">
+                email = #{email},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        delete from t_user where id = #{id}
+    </delete>
+
+    <!--
+        查询功能的标签必须设置resultType或resultMap
+        resultType: 设置默认的映射关系
+        resultMap: 设置自定义的映射关系
+     -->
+    <select id="getUserById" resultType="User" parameterType="java.lang.Integer">
+        select * from t_user where id = #{id}
+    </select>
+
+    <select id="getAllUser" resultType="User">
+        select * from t_user
+    </select>
+
+
+</mapper>
